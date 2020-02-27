@@ -1,0 +1,15 @@
+// C
+printf("Hello World");
+
+// Java
+System.out.print("Hello World");
+
+// Python
+print("Hello World")
+
+// C#
+System.Console.WriteLine("Hello, World!");
+
+// JavaScript
+console.log("Hello World");
+
