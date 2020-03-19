@@ -1,6 +1,12 @@
 package GUI;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,13 +18,14 @@ import javax.swing.text.Document;
 import javax.swing.undo.UndoManager;
 
 /**
- *
+ * Status: Waiting
  * @author tanh2k2k
  */
 public class FrameTextEditor extends javax.swing.JFrame
 {
     /* ============================= VARIABLES ============================= */
     
+    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     private UndoManager undoManager;            // Undo, Redo Controller
     private String findStr = "";                // "Find" text
     private String filePath = "";               // File path
@@ -166,6 +173,8 @@ public class FrameTextEditor extends javax.swing.JFrame
                     int option = save.showSaveDialog(this);
                     if (option == JFileChooser.APPROVE_OPTION)
                         writeFile(save.getSelectedFile().getPath() + ".txt");
+                    if (option == JFileChooser.CANCEL_OPTION)
+                        return false;
                 }
             else if (result == JOptionPane.CANCEL_OPTION)
                 return false;
@@ -631,17 +640,30 @@ public class FrameTextEditor extends javax.swing.JFrame
     // Cut
     private void menuCutActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuCutActionPerformed
     {//GEN-HEADEREND:event_menuCutActionPerformed
-        txtArea.cut();
+        String cutString = txtArea.getSelectedText();
+        StringSelection cutSelection = new StringSelection(cutString);
+        clipboard.setContents(cutSelection, cutSelection);
+        txtArea.replaceRange("", txtArea.getSelectionStart(), txtArea.getSelectionEnd());
     }//GEN-LAST:event_menuCutActionPerformed
     // Copy
     private void menuCopyActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuCopyActionPerformed
     {//GEN-HEADEREND:event_menuCopyActionPerformed
-        txtArea.copy();
+        String cutString = txtArea.getSelectedText();
+        StringSelection cutSelection = new StringSelection(cutString);
+        clipboard.setContents(cutSelection, cutSelection);
     }//GEN-LAST:event_menuCopyActionPerformed
     // Paste
     private void menuPasteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuPasteActionPerformed
     {//GEN-HEADEREND:event_menuPasteActionPerformed
-        txtArea.paste();
+        try
+        {
+            Transferable pasteText = clipboard.getContents(this);
+            String sel = (String) pasteText.getTransferData(DataFlavor.stringFlavor);
+            txtArea.replaceRange(sel, txtArea.getSelectionStart(), txtArea.getSelectionEnd());
+        } catch (UnsupportedFlavorException | IOException ex)
+        {
+            Logger.getLogger(FrameTextEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_menuPasteActionPerformed
     // Delete
     private void menuDelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuDelActionPerformed
@@ -668,9 +690,10 @@ public class FrameTextEditor extends javax.swing.JFrame
         boolean setEdit = txtArea.getSelectedText() != null;
         menuCut.setEnabled(setEdit);
         menuCopy.setEnabled(setEdit);
+        menuPaste.setEnabled(clipboard.getContents(null).isDataFlavorSupported(DataFlavor.stringFlavor));
         menuDel.setEnabled(setEdit);
         menuUndo.setEnabled(undoManager.canUndo());
-        menuRedo.setEnabled(undoManager.canRedo());
+        menuRedo.setEnabled(undoManager.canRedo()); 
     }//GEN-LAST:event_menuEditMenuSelected
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem1ActionPerformed

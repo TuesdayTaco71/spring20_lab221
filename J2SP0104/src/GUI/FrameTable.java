@@ -1,8 +1,8 @@
 package GUI;
 
 /**
- *
- * @author tanh2
+ * Status: Ongoing
+ * @author tanh2k2k
  */
 public class FrameTable extends javax.swing.JFrame
 {

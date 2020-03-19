@@ -4,7 +4,7 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import javax.swing.ImageIcon;
 
 /**
- *
+ * Status: Waiting
  * @author tanh2k2k
  */
 public class FrameImage extends javax.swing.JFrame
@@ -131,27 +131,27 @@ public class FrameImage extends javax.swing.JFrame
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-        setIcon("D:\\documents\\code\\Java\\LAB\\lab221\\J2SP0001\\src\\Image\\1.png");
+        setIcon("src\\Image\\1.png");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton2ActionPerformed
     {//GEN-HEADEREND:event_jButton2ActionPerformed
-        setIcon("D:\\documents\\code\\Java\\LAB\\lab221\\J2SP0001\\src\\Image\\2.jpg");
+        setIcon("src\\Image\\2.jpg");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton3ActionPerformed
     {//GEN-HEADEREND:event_jButton3ActionPerformed
-        setIcon("D:\\documents\\code\\Java\\LAB\\lab221\\J2SP0001\\src\\Image\\3.jpg");
+        setIcon("src\\Image\\3.jpg");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton4ActionPerformed
     {//GEN-HEADEREND:event_jButton4ActionPerformed
-        setIcon("D:\\documents\\code\\Java\\LAB\\lab221\\J2SP0001\\src\\Image\\4.jpg");
+        setIcon("src\\Image\\4.jpg");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton5ActionPerformed
     {//GEN-HEADEREND:event_jButton5ActionPerformed
-        setIcon("D:\\documents\\code\\Java\\LAB\\lab221\\J2SP0001\\src\\Image\\5.png");
+        setIcon("src\\Image\\5.png");
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**

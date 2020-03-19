@@ -1,20 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import Utilities.Validation;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Status: Ongoing
  * @author tanh2
  */
 public class FrameData extends javax.swing.JFrame
 {
     Validation validation = new Validation();
+    
     /**
      * Creates new form DataFrame
      */
