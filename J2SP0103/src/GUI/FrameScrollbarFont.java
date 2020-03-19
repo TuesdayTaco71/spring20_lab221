@@ -3,8 +3,8 @@ package GUI;
 import java.awt.Font;
 
 /**
- *
- * @author tanh2
+ * Status: Passed
+ * @author tanh2k2k
  */
 public class FrameScrollbarFont extends javax.swing.JFrame
 {

@@ -76,6 +76,7 @@ public class FrameTable extends javax.swing.JFrame
                 return canEdit [columnIndex];
             }
         });
+        tblData.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tblData);
         if (tblData.getColumnModel().getColumnCount() > 0)
         {

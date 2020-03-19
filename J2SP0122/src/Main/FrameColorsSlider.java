@@ -3,8 +3,8 @@ package Main;
 import java.awt.Color;
 
 /**
- *
- * @author tanh2
+ * Status: Passed
+ * @author tanh2k2k
  */
 public class FrameColorsSlider extends javax.swing.JFrame
 {
@@ -74,15 +74,15 @@ public class FrameColorsSlider extends javax.swing.JFrame
             }
         });
 
-        jLabelRed.setFont(new java.awt.Font("MS Gothic", 1, 24)); // NOI18N
+        jLabelRed.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
         jLabelRed.setForeground(new java.awt.Color(255, 0, 0));
         jLabelRed.setText("朱 = 0");
 
-        jLabelGreen.setFont(new java.awt.Font("MS Gothic", 1, 24)); // NOI18N
+        jLabelGreen.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
         jLabelGreen.setForeground(new java.awt.Color(0, 255, 0));
         jLabelGreen.setText("緑 = 0");
 
-        jLabelBlue.setFont(new java.awt.Font("MS Gothic", 1, 24)); // NOI18N
+        jLabelBlue.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
         jLabelBlue.setForeground(new java.awt.Color(0, 0, 255));
         jLabelBlue.setText("青 = 0");
 
@@ -112,15 +112,15 @@ public class FrameColorsSlider extends javax.swing.JFrame
             .addGroup(jPanelSpecsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelSpecsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSliderRed, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jSliderRed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelRed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelSpecsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSliderGreen, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jSliderGreen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelGreen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelSpecsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSliderBlue, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jSliderBlue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelBlue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

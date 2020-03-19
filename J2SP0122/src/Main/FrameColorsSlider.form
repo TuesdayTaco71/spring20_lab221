@@ -83,17 +83,17 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jSliderRed" pref="30" max="32767" attributes="0"/>
+                      <Component id="jSliderRed" max="32767" attributes="0"/>
                       <Component id="jLabelRed" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jSliderGreen" pref="30" max="32767" attributes="0"/>
+                      <Component id="jSliderGreen" max="32767" attributes="0"/>
                       <Component id="jLabelGreen" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jSliderBlue" pref="30" max="32767" attributes="0"/>
+                      <Component id="jSliderBlue" max="32767" attributes="0"/>
                       <Component id="jLabelBlue" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -131,7 +131,7 @@
         <Component class="javax.swing.JLabel" name="jLabelRed">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="MS Gothic" size="24" style="1"/>
+              <Font name="Microsoft YaHei UI" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="ff" type="rgb"/>
@@ -142,7 +142,7 @@
         <Component class="javax.swing.JLabel" name="jLabelGreen">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="MS Gothic" size="24" style="1"/>
+              <Font name="Microsoft YaHei UI" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="ff" red="0" type="rgb"/>
@@ -153,7 +153,7 @@
         <Component class="javax.swing.JLabel" name="jLabelBlue">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="MS Gothic" size="24" style="1"/>
+              <Font name="Microsoft YaHei UI" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="0" red="0" type="rgb"/>

@@ -1,23 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
+import Utilities.FileConnection;
+import Utilities.FileCustom;
+import Utilities.ImageTool;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+
 /**
- *
- * @author tanh2
+ * Status: Passed
+ * @author tanh2k2k
  */
-public class FrameComboBox extends javax.swing.JFrame
+public class FrameComboBox extends javax.swing.JFrame 
 {
+    private FileConnection connection = new FileConnection();
+    private String path = connection.getPath();
+    private ArrayList<FileCustom> listItem = connection.getItems();
 
     /**
      * Creates new form FrameComboBox
      */
     public FrameComboBox()
     {
+        FlatIntelliJLaf.install();
         initComponents();
+        insertComboBox();
+    }
+
+    private void insertComboBox()
+    {
+        for (FileCustom f : listItem)
+            if (f.getExtension().matches("^.*(jpg|png).*$"))
+                cboFile.addItem(f.getBase()+"."+f.getExtension());
+    }
+
+    private void setIcon(String path)
+    {
+        ImageIcon a = ImageTool.setImage(path);
+        lblImage.setIcon(a);
     }
 
     /**
@@ -30,21 +50,57 @@ public class FrameComboBox extends javax.swing.JFrame
     private void initComponents()
     {
 
+        cboFile = new javax.swing.JComboBox<>();
+        lblImage = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Combo Box");
+        setResizable(false);
+
+        cboFile.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cboFile.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                cboFileItemStateChanged(evt);
+            }
+        });
+
+        lblImage.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cboFile, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cboFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cboFileItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_cboFileItemStateChanged
+    {//GEN-HEADEREND:event_cboFileItemStateChanged
+        lblImage.setIcon(null);
+        lblImage.setText("");
+        for (FileCustom f : listItem)
+            if ((f.getBase()+"."+f.getExtension()).equals(cboFile.getSelectedItem()))
+                setIcon(path + "\\" + f.getBase() + "." + f.getExtension());
+    }//GEN-LAST:event_cboFileItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -59,7 +115,7 @@ public class FrameComboBox extends javax.swing.JFrame
         try
         {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-                if ("Nimbus".equals(info.getName()))
+                if ("Windows".equals(info.getName()))
                 {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
@@ -90,5 +146,7 @@ public class FrameComboBox extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cboFile;
+    private javax.swing.JLabel lblImage;
     // End of variables declaration//GEN-END:variables
 }

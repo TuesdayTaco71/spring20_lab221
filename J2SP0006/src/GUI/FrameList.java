@@ -1,20 +1,48 @@
 package GUI;
 
+import Utilities.FileConnection;
+import Utilities.FileCustom;
+import Utilities.ImageTool;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+
 /**
- *
- * @author tanh2
+ * Status: Passed
+ * @author tanh2k2k
  */
 public class FrameList extends javax.swing.JFrame
 {
-
+    private FileConnection connection = new FileConnection();
+    private String path = connection.getPath();
+    private ArrayList<FileCustom> listItem = connection.getItems();
+    
     /**
      * Creates new form FrameList
      */
     public FrameList()
     {
+        FlatIntelliJLaf.install();
         initComponents();
+        insertList();
     }
-
+    
+    public void insertList()
+    {
+        DefaultListModel demoList = new DefaultListModel();
+        for (FileCustom f : listItem)
+            if (f.getExtension().matches("^.*(jpg|png).*$"))
+                demoList.addElement(f.getBase()+"."+f.getExtension());
+        listFile.setModel(demoList);
+    }
+    
+    private void setIcon(String path)
+    {
+        ImageIcon a = ImageTool.setImage(path);
+        lblImage.setIcon(a);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -25,21 +53,62 @@ public class FrameList extends javax.swing.JFrame
     private void initComponents()
     {
 
+        lblImage = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listFile = new javax.swing.JList<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("List");
+        setResizable(false);
+
+        lblImage.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        listFile.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        listFile.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
+                listFileValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listFile);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void listFileValueChanged(javax.swing.event.ListSelectionEvent evt)//GEN-FIRST:event_listFileValueChanged
+    {//GEN-HEADEREND:event_listFileValueChanged
+        lblImage.setIcon(null);
+        lblImage.setText("");
+        for (FileCustom f : listItem)
+        {
+            
+            if ((f.getBase()+"."+f.getExtension()).equals(listFile.getSelectedValue()))
+                setIcon(path + "\\" + f.getBase() + "." + f.getExtension());
+        }
+    }//GEN-LAST:event_listFileValueChanged
 
     /**
      * @param args the command line arguments
@@ -54,7 +123,7 @@ public class FrameList extends javax.swing.JFrame
         try
         {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-                if ("Nimbus".equals(info.getName()))
+                if ("Windows".equals(info.getName()))
                 {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
@@ -85,5 +154,8 @@ public class FrameList extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblImage;
+    private javax.swing.JList<String> listFile;
     // End of variables declaration//GEN-END:variables
 }
