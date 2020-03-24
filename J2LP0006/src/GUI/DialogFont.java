@@ -275,6 +275,8 @@ public class DialogFont extends javax.swing.JDialog
     {//GEN-HEADEREND:event_btnOkActionPerformed
         try
         {
+            if(Integer.parseInt(txtSize.getText()) <= 0)
+                throw new Exception();
             ((FrameTextEditor) this.getParent()).getTxtArea().setFont(new Font(txtFont.getName(), listStyle.getSelectedIndex(), Integer.parseInt(txtSize.getText())));
             this.dispose();
         } catch (Exception ex)

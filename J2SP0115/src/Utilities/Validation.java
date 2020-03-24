@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Status: Ongoing
  * @author tanh2k2k
  */
 public class Validation

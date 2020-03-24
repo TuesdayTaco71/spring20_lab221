@@ -1,25 +1,59 @@
 package GUI;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
- * Status: Ongoing
+ * Status: Waiting
  * @author tanh2k2k
  */
 public class FrameTable extends javax.swing.JFrame
 {
-    String[] columnName = {"StockID", "StockName", "Address", "DateAvailable", "Note"};
-    Object[][] data = { {"1", "Stock one", "No1 - Washington street", "11/05/2010", ""},
-                        {"2", "Stock two", "372 Cave Town - 001 Banks", "09/07/2011", ""},
-                        {"3", "Stock Three", "Nary angel - 890 Number one", "13/05/2010", ""},
-                        {"4", "Stock Four", "Twin tower - 01 Main Street", "04/07/2015", ""},
-                        {"5", "Stock Five", "Victory anniversary district", "08/12/2014", ""}};
+    DefaultTableModel dTbl = new DefaultTableModel();
+    int rowCount = 0;
+    
     /**
      * Creates new form TableFrame
      */
     public FrameTable()
     {
         initComponents();
+        insertData();
+        tblData.setRowSelectionInterval(0, 0);
+    }
+    
+    private void insertData()
+    {
+        String[] columnName = {"StockID", "StockName", "Address", "DateAvailable", "Note"};
+        Object[][] data = { {"1", "Stock one", "No1 - Washington street", "11/05/2010", ""},
+                            {"2", "Stock two", "372 Cave Town - 001 Banks", "09/07/2011", ""},
+                            {"3", "Stock three", "Nary angel - 890 Number one", "13/05/2010", ""},
+                            {"4", "Stock four", "Twin tower - 01 Main Street", "04/07/2015", ""},
+                            {"5", "Stock five", "Victory anniversary district", "08/12/2014", ""},
+                            {"6", "Stock six", "No1 - Washington street", "11/05/2010", ""},
+                            {"7", "Stock seven", "372 Cave Town - 001 Banks", "09/07/2011", ""},
+                            {"8", "Stock eight", "Nary angel - 890 Number one", "13/05/2010", ""},
+                            {"9", "Stock nine", "Twin tower - 01 Main Street", "04/07/2015", ""},
+                            {"10", "Stock ten", "Victory anniversary district", "08/12/2014", ""},
+                            {"100", "Stock teen", "Victory anniversary district", "08/12/2014", ""},
+                            {"1000", "Stock teeen", "Victory anniversary district", "08/12/2014", ""}};
+        rowCount = data.length;
+        dTbl.setDataVector(data, columnName);
+        tblData.setModel(dTbl);
     }
 
+    private void moveRowBy(int index) 
+    {
+        int destination = tblData.getSelectedRow()+index;
+        if(destination < 0 || destination == rowCount)
+            return;
+//        if(destination < 0)
+//            tblData.setRowSelectionInterval(rowCount-1, rowCount-1);
+//        else if(destination == rowCount)
+//            tblData.setRowSelectionInterval(0, 0);
+//        else
+            tblData.setRowSelectionInterval(destination, destination);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,15 +67,17 @@ public class FrameTable extends javax.swing.JFrame
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnFirst = new javax.swing.JButton();
+        btnPrevious = new javax.swing.JButton();
+        btnNext = new javax.swing.JButton();
+        btnLast = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Data Table");
 
+        tblData.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tblData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
@@ -90,17 +126,45 @@ public class FrameTable extends javax.swing.JFrame
             tblData.getColumnModel().getColumn(4).setMaxWidth(60);
         }
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Move First");
+        btnFirst.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnFirst.setText("Move First");
+        btnFirst.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnFirstActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Move Previous");
+        btnPrevious.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnPrevious.setText("Move Previous");
+        btnPrevious.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnPreviousActionPerformed(evt);
+            }
+        });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setText("Move Next");
+        btnNext.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnNext.setText("Move Next");
+        btnNext.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnNextActionPerformed(evt);
+            }
+        });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton4.setText("Move Last");
+        btnLast.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnLast.setText("Move Last");
+        btnLast.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnLastActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,32 +173,54 @@ public class FrameTable extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(49, 49, 49)
+                        .addComponent(btnFirst)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPrevious)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnNext)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLast)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnLast)
+                    .addComponent(btnNext)
+                    .addComponent(btnPrevious)
+                    .addComponent(btnFirst))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFirstActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnFirstActionPerformed
+    {//GEN-HEADEREND:event_btnFirstActionPerformed
+        tblData.setRowSelectionInterval(0, 0);
+    }//GEN-LAST:event_btnFirstActionPerformed
+
+    private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnPreviousActionPerformed
+    {//GEN-HEADEREND:event_btnPreviousActionPerformed
+        moveRowBy(-1);
+    }//GEN-LAST:event_btnPreviousActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNextActionPerformed
+    {//GEN-HEADEREND:event_btnNextActionPerformed
+        moveRowBy(1);
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnLastActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnLastActionPerformed
+    {//GEN-HEADEREND:event_btnLastActionPerformed
+        tblData.setRowSelectionInterval(rowCount-1, rowCount-1);
+    }//GEN-LAST:event_btnLastActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,7 +235,7 @@ public class FrameTable extends javax.swing.JFrame
         try
         {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-                if ("Nimbus".equals(info.getName()))
+                if ("Windows".equals(info.getName()))
                 {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
@@ -181,10 +267,10 @@ public class FrameTable extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnFirst;
+    private javax.swing.JButton btnLast;
+    private javax.swing.JButton btnNext;
+    private javax.swing.JButton btnPrevious;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblData;

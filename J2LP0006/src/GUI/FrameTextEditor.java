@@ -289,7 +289,7 @@ public class FrameTextEditor extends javax.swing.JFrame
         menuFind = new javax.swing.JMenuItem();
         menuReplace = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuSelectAll = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         menuFont = new javax.swing.JMenuItem();
 
@@ -490,17 +490,17 @@ public class FrameTextEditor extends javax.swing.JFrame
         menuEdit.add(menuReplace);
         menuEdit.add(jSeparator5);
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setMnemonic('A');
-        jMenuItem1.setText("Select All");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener()
+        menuSelectAll.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        menuSelectAll.setMnemonic('A');
+        menuSelectAll.setText("Select All");
+        menuSelectAll.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jMenuItem1ActionPerformed(evt);
+                menuSelectAllActionPerformed(evt);
             }
         });
-        menuEdit.add(jMenuItem1);
+        menuEdit.add(menuSelectAll);
         menuEdit.add(jSeparator6);
 
         menuFont.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
@@ -675,6 +675,7 @@ public class FrameTextEditor extends javax.swing.JFrame
     {//GEN-HEADEREND:event_menuFindActionPerformed
         DialogFind find = new DialogFind(this, true);
         find.setVisible(true);
+        this.setEnabled(false);
     }//GEN-LAST:event_menuFindActionPerformed
     // Replace
     private void menuReplaceActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuReplaceActionPerformed
@@ -696,10 +697,10 @@ public class FrameTextEditor extends javax.swing.JFrame
         menuRedo.setEnabled(undoManager.canRedo()); 
     }//GEN-LAST:event_menuEditMenuSelected
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem1ActionPerformed
-    {//GEN-HEADEREND:event_jMenuItem1ActionPerformed
+    private void menuSelectAllActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuSelectAllActionPerformed
+    {//GEN-HEADEREND:event_menuSelectAllActionPerformed
         txtArea.selectAll();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuSelectAllActionPerformed
 
     private void menuFontActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuFontActionPerformed
     {//GEN-HEADEREND:event_menuFontActionPerformed
@@ -753,7 +754,6 @@ public class FrameTextEditor extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
@@ -775,6 +775,7 @@ public class FrameTextEditor extends javax.swing.JFrame
     private javax.swing.JMenuItem menuReplace;
     private javax.swing.JMenuItem menuSave;
     private javax.swing.JMenuItem menuSaveAs;
+    private javax.swing.JMenuItem menuSelectAll;
     private javax.swing.JMenuItem menuUndo;
     private javax.swing.JTextArea txtArea;
     // End of variables declaration//GEN-END:variables
