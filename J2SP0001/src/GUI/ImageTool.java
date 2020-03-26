@@ -20,9 +20,7 @@ public class ImageTool
             int resizeHeight = resizeImage(icon.getIconHeight(), icon.getIconWidth(), 698);
             newImg = img.getScaledInstance(698, resizeHeight, Image.SCALE_SMOOTH);
         } else
-        {
             newImg = img.getScaledInstance(resizeWidth, 415, Image.SCALE_SMOOTH);
-        }
         ImageIcon newImc = new ImageIcon(newImg);
         return newImc;
     }

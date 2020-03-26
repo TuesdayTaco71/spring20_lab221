@@ -3,7 +3,7 @@ package GUI;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Status: Waiting
+ * Status: Passed
  * @author tanh2k2k
  */
 public class FrameTable extends javax.swing.JFrame
@@ -44,13 +44,13 @@ public class FrameTable extends javax.swing.JFrame
     private void moveRowBy(int index) 
     {
         int destination = tblData.getSelectedRow()+index;
-        if(destination < 0 || destination == rowCount)
-            return;
-//        if(destination < 0)
-//            tblData.setRowSelectionInterval(rowCount-1, rowCount-1);
-//        else if(destination == rowCount)
-//            tblData.setRowSelectionInterval(0, 0);
-//        else
+//        if(destination < 0 || destination == rowCount)
+//            return;
+        if(destination < 0)
+            tblData.setRowSelectionInterval(rowCount-1, rowCount-1);
+        else if(destination == rowCount)
+            tblData.setRowSelectionInterval(0, 0);
+        else
             tblData.setRowSelectionInterval(destination, destination);
     }
     

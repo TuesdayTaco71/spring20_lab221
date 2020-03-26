@@ -2,11 +2,7 @@ package GUI;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.datatransfer.*;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,14 +14,14 @@ import javax.swing.text.Document;
 import javax.swing.undo.UndoManager;
 
 /**
- * Status: Waiting
+ * Status: Half
  * @author tanh2k2k
  */
 public class FrameTextEditor extends javax.swing.JFrame
 {
     /* ============================= VARIABLES ============================= */
     
-    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard(); // Clipboard
     private UndoManager undoManager;            // Undo, Redo Controller
     private String findStr = "";                // "Find" text
     private String filePath = "";               // File path
@@ -40,15 +36,6 @@ public class FrameTextEditor extends javax.swing.JFrame
         FlatIntelliJLaf.install();
         initComponents();
         undoManager = new UndoManager();
-//        Document doc = this.txtArea.getDocument();
-//        doc.addUndoableEditListener(new UndoableEditListener()
-//        {
-//            @Override
-//            public void undoableEditHappened(UndoableEditEvent e)
-//            {
-//                undoManager.addEdit(e.getEdit());
-//            }
-//        });
         getEdit();
     }
 
@@ -543,7 +530,7 @@ public class FrameTextEditor extends javax.swing.JFrame
         originalTxt = "";
         txtArea.setText("");
         setTitle("Nathpad");
-        undoManager = new UndoManager();
+        undoManager.discardAllEdits();
     }//GEN-LAST:event_menuNewActionPerformed
 
     // Open
@@ -566,6 +553,7 @@ public class FrameTextEditor extends javax.swing.JFrame
                 originalTxt = txtArea.getText();
                 getEdit();
                 setNewTitle(open.getSelectedFile().getName().substring(0, open.getSelectedFile().getName().length() - 4));
+                undoManager.discardAllEdits();
             } catch (Exception e)
             {
                 JOptionPane.showMessageDialog(this, "Can't open file!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -675,7 +663,7 @@ public class FrameTextEditor extends javax.swing.JFrame
     {//GEN-HEADEREND:event_menuFindActionPerformed
         DialogFind find = new DialogFind(this, true);
         find.setVisible(true);
-        this.setEnabled(false);
+        this.setEnabled(true);
     }//GEN-LAST:event_menuFindActionPerformed
     // Replace
     private void menuReplaceActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuReplaceActionPerformed
