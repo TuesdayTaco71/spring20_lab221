@@ -14,7 +14,7 @@ import javax.swing.text.Document;
 import javax.swing.undo.UndoManager;
 
 /**
- * Status: Half
+ * Status: Passed
  * @author tanh2k2k
  */
 public class FrameTextEditor extends javax.swing.JFrame
@@ -22,7 +22,7 @@ public class FrameTextEditor extends javax.swing.JFrame
     /* ============================= VARIABLES ============================= */
     
     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard(); // Clipboard
-    private UndoManager undoManager;            // Undo, Redo Controller
+    private final UndoManager undoManager;      // Undo, Redo Controller
     private String findStr = "";                // "Find" text
     private String filePath = "";               // File path
     private String originalTxt = "";            // To compare saved text and txtArea

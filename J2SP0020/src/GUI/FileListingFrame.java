@@ -1,5 +1,6 @@
 package GUI;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,8 +16,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
- *
- * @author tanh2
+ * Status: Passed
+ * @author tanh2k2k
  */
 public class FileListingFrame extends javax.swing.JFrame implements DocumentListener
 {
@@ -29,6 +30,7 @@ public class FileListingFrame extends javax.swing.JFrame implements DocumentList
      */
     public FileListingFrame()
     {
+        FlatIntelliJLaf.install();
         initComponents();
     }
 

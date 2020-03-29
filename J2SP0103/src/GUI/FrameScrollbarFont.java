@@ -1,5 +1,6 @@
 package GUI;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.awt.Font;
 
 /**
@@ -13,6 +14,7 @@ public class FrameScrollbarFont extends javax.swing.JFrame
      */
     public FrameScrollbarFont()
     {
+        FlatIntelliJLaf.install();
         initComponents();
     }
 

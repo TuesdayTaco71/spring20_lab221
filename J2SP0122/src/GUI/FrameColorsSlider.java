@@ -1,5 +1,6 @@
-package Main;
+package GUI;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.awt.Color;
 
 /**
@@ -15,10 +16,11 @@ public class FrameColorsSlider extends javax.swing.JFrame
      */
     public FrameColorsSlider()
     {
+        FlatIntelliJLaf.install();
         initComponents();
-        jLabelRed.setText("朱 = " + jSliderRed.getValue());
-        jLabelGreen.setText("緑 = " + jSliderGreen.getValue());
-        jLabelBlue.setText("青 = " + jSliderBlue.getValue());
+        jLabelRed.setText("R = " + jSliderRed.getValue());
+        jLabelGreen.setText("G = " + jSliderGreen.getValue());
+        jLabelBlue.setText("B = " + jSliderBlue.getValue());
         jLabelColor.setBackground(new Color(jSliderRed.getValue(), jSliderGreen.getValue(), jSliderBlue.getValue()));
     }
 
@@ -74,17 +76,20 @@ public class FrameColorsSlider extends javax.swing.JFrame
             }
         });
 
-        jLabelRed.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
+        jLabelRed.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabelRed.setForeground(new java.awt.Color(255, 0, 0));
-        jLabelRed.setText("朱 = 0");
+        jLabelRed.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelRed.setText("R = 0");
 
-        jLabelGreen.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
+        jLabelGreen.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabelGreen.setForeground(new java.awt.Color(0, 255, 0));
-        jLabelGreen.setText("緑 = 0");
+        jLabelGreen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelGreen.setText("G = 0");
 
-        jLabelBlue.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
+        jLabelBlue.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabelBlue.setForeground(new java.awt.Color(0, 0, 255));
-        jLabelBlue.setText("青 = 0");
+        jLabelBlue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelBlue.setText("B = 0");
 
         javax.swing.GroupLayout jPanelSpecsLayout = new javax.swing.GroupLayout(jPanelSpecs);
         jPanelSpecs.setLayout(jPanelSpecsLayout);
@@ -156,7 +161,7 @@ public class FrameColorsSlider extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jSliderRedStateChanged
         Color result = new Color(R, G, B);
         R = jSliderRed.getValue();
-        jLabelRed.setText("朱 = " + R);
+        jLabelRed.setText("R = " + R);
         jLabelColor.setBackground(result);
     }//GEN-LAST:event_jSliderRedStateChanged
 
@@ -164,7 +169,7 @@ public class FrameColorsSlider extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jSliderGreenStateChanged
         Color result = new Color(R, G, B);
         G = jSliderGreen.getValue();
-        jLabelGreen.setText("緑 = " + G);
+        jLabelGreen.setText("G = " + G);
         jLabelColor.setBackground(result);
     }//GEN-LAST:event_jSliderGreenStateChanged
 
@@ -172,7 +177,7 @@ public class FrameColorsSlider extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jSliderBlueStateChanged
         Color result = new Color(R, G, B);
         B = jSliderBlue.getValue();
-        jLabelBlue.setText("青 = " + B);
+        jLabelBlue.setText("B = " + B);
         jLabelColor.setBackground(result);
     }//GEN-LAST:event_jSliderBlueStateChanged
 

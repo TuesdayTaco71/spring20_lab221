@@ -1,5 +1,6 @@
 package GUI;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,6 +17,7 @@ public class FrameTable extends javax.swing.JFrame
      */
     public FrameTable()
     {
+        FlatIntelliJLaf.install();
         initComponents();
         insertData();
         tblData.setRowSelectionInterval(0, 0);
