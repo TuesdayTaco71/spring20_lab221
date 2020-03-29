@@ -36,6 +36,7 @@ public class FrameImage extends javax.swing.JFrame
         lblImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/1.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener()

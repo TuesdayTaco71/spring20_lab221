@@ -1,13 +1,27 @@
 package GUI;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+import javax.swing.JButton;
 
 /**
- *
+ * Status: Waiting
  * @author tanh2k2k
  */
 public class FrameCalculator extends javax.swing.JFrame
 {
+    /* ============================= VARIABLES ============================= */
+    
+    private boolean append = false;
+    private boolean error = false;
+    private double num = 0;
+    private double memory = 0;
+    String operator = "";
+    
+    /* ============================ CONSTRUCTOR ============================ */
+    
     /**
      * Creates new form FrameCalculator
      */
@@ -16,6 +30,101 @@ public class FrameCalculator extends javax.swing.JFrame
         FlatIntelliJLaf.install();
         initComponents();
     }
+    
+    /* ============================== FUNCTION ============================== */
+    
+    /**
+     * Allow user press numeric button (1, 2, 3, 4, 5, 6, 7, 8, 9)
+     * @param button Numeric button
+     */
+    private void pressBtnNum(JButton button)
+    {
+        if (!error)
+        {
+            if (txtDisplay.getText().equals("0") || !append)
+                txtDisplay.setText(button.getText());
+            else
+                txtDisplay.setText(txtDisplay.getText() + button.getText());
+            append = true;
+        }
+    }
+    
+    /**
+     * Allow user press basic operator button (+, -, *, /)
+     * @param button Operator button
+     */
+    private void pressBtnOperator(JButton button)
+    {
+        if (!error)
+        {
+            if (append && operator.equals(""))
+            {
+                num = Double.parseDouble(txtDisplay.getText());
+                operator = button.getText();
+            } else if (append && !operator.equals(""))
+            {
+                pressBtnResult();
+                operator = button.getText();
+            } else
+                operator = button.getText();
+            append = false;
+        }
+    }
+    
+    /**
+     * Allow user press Result button ( = ) and show result
+     */
+    private void pressBtnResult()
+    {
+        if (append && !error)
+            if(operator.isEmpty())
+            {
+                num = Double.parseDouble(txtDisplay.getText());
+                txtDisplay.setText(convertDecimalFormat(num));
+            }
+            if (operator.equals("+"))
+            {
+                num += Double.parseDouble(txtDisplay.getText());
+                txtDisplay.setText(convertDecimalFormat(num));
+            } else if (operator.equals("-"))
+            {
+                num -= Double.parseDouble(txtDisplay.getText());
+                txtDisplay.setText(convertDecimalFormat(num));
+            } else if (operator.equals("*"))
+            {
+                num *= Double.parseDouble(txtDisplay.getText());
+                txtDisplay.setText(convertDecimalFormat(num));
+            } else if (operator.equals("/"))
+                if (Double.parseDouble(txtDisplay.getText()) == 0)
+                {
+                    txtDisplay.setText("ERROR");
+                    error = true;
+                } else
+                {
+                    num /= Double.parseDouble(txtDisplay.getText());
+                    txtDisplay.setText(convertDecimalFormat(num));
+                }
+        operator = "";
+        append = false;
+        System.out.println("RESULT = " + num);
+    }
+    
+    /**
+     * covert Double variable to String
+     * @param num Input number
+     * @return Double number is String
+     */
+    private String convertDecimalFormat(double num)
+    {
+        Locale locale = new Locale("en", "UK");
+        DecimalFormat dFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
+        String pattern = "#########.#########";
+        dFormat.applyPattern(pattern);
+        String result = dFormat.format(num);
+        return result;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,395 +136,571 @@ public class FrameCalculator extends javax.swing.JFrame
     private void initComponents()
     {
 
-        jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton24 = new javax.swing.JButton();
-        jButton25 = new javax.swing.JButton();
-        jButton28 = new javax.swing.JButton();
-        jButton26 = new javax.swing.JButton();
-        jButton27 = new javax.swing.JButton();
-        jButton22 = new javax.swing.JButton();
-        jButton20 = new javax.swing.JButton();
-        jButton19 = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
-        jButton23 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
-        jButton16 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        paneBackground = new javax.swing.JPanel();
+        txtDisplay = new javax.swing.JTextField();
+        btnMClear = new javax.swing.JButton();
+        btnMRecall = new javax.swing.JButton();
+        btnMStore = new javax.swing.JButton();
+        btnMAdd = new javax.swing.JButton();
+        btnMSub = new javax.swing.JButton();
+        btnSqrt = new javax.swing.JButton();
+        btnChangeSign = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        btnBackspace = new javax.swing.JButton();
+        btn7 = new javax.swing.JButton();
+        btn8 = new javax.swing.JButton();
+        btn9 = new javax.swing.JButton();
+        btnDiv = new javax.swing.JButton();
+        btnPercent = new javax.swing.JButton();
+        btnInverse = new javax.swing.JButton();
+        btnMul = new javax.swing.JButton();
+        btn6 = new javax.swing.JButton();
+        btn5 = new javax.swing.JButton();
+        btn4 = new javax.swing.JButton();
+        btn1 = new javax.swing.JButton();
+        btn2 = new javax.swing.JButton();
+        btn3 = new javax.swing.JButton();
+        btnSub = new javax.swing.JButton();
+        btnResult = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnDecPoint = new javax.swing.JButton();
+        btn0 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Calculator");
         setIconImages(null);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(31, 32, 35));
+        paneBackground.setBackground(new java.awt.Color(31, 32, 35));
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(44, 47, 49));
-        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField1.setText("0");
-        jTextField1.setBorder(null);
+        txtDisplay.setEditable(false);
+        txtDisplay.setBackground(new java.awt.Color(44, 47, 49));
+        txtDisplay.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        txtDisplay.setForeground(new java.awt.Color(255, 255, 255));
+        txtDisplay.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtDisplay.setText("0");
+        txtDisplay.setBorder(null);
 
-        jButton24.setBackground(new java.awt.Color(31, 32, 35));
-        jButton24.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton24.setForeground(new java.awt.Color(42, 222, 159));
-        jButton24.setText("MC");
-        jButton24.setBorderPainted(false);
-        jButton24.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton24.setOpaque(false);
+        btnMClear.setBackground(new java.awt.Color(31, 32, 35));
+        btnMClear.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnMClear.setForeground(new java.awt.Color(42, 222, 159));
+        btnMClear.setText("MC");
+        btnMClear.setBorderPainted(false);
+        btnMClear.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMClear.setOpaque(false);
+        btnMClear.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnMClearActionPerformed(evt);
+            }
+        });
 
-        jButton25.setBackground(new java.awt.Color(31, 32, 35));
-        jButton25.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton25.setForeground(new java.awt.Color(42, 222, 159));
-        jButton25.setText("MR");
-        jButton25.setBorderPainted(false);
-        jButton25.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton25.setOpaque(false);
+        btnMRecall.setBackground(new java.awt.Color(31, 32, 35));
+        btnMRecall.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnMRecall.setForeground(new java.awt.Color(42, 222, 159));
+        btnMRecall.setText("MR");
+        btnMRecall.setBorderPainted(false);
+        btnMRecall.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMRecall.setOpaque(false);
+        btnMRecall.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnMRecallActionPerformed(evt);
+            }
+        });
 
-        jButton28.setBackground(new java.awt.Color(31, 32, 35));
-        jButton28.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton28.setForeground(new java.awt.Color(42, 222, 159));
-        jButton28.setText("MS");
-        jButton28.setBorderPainted(false);
-        jButton28.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton28.setOpaque(false);
+        btnMStore.setBackground(new java.awt.Color(31, 32, 35));
+        btnMStore.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnMStore.setForeground(new java.awt.Color(42, 222, 159));
+        btnMStore.setText("MS");
+        btnMStore.setBorderPainted(false);
+        btnMStore.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMStore.setOpaque(false);
+        btnMStore.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnMStoreActionPerformed(evt);
+            }
+        });
 
-        jButton26.setBackground(new java.awt.Color(31, 32, 35));
-        jButton26.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton26.setForeground(new java.awt.Color(42, 222, 159));
-        jButton26.setText("M+");
-        jButton26.setBorderPainted(false);
-        jButton26.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton26.setOpaque(false);
+        btnMAdd.setBackground(new java.awt.Color(31, 32, 35));
+        btnMAdd.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnMAdd.setForeground(new java.awt.Color(42, 222, 159));
+        btnMAdd.setText("M+");
+        btnMAdd.setBorderPainted(false);
+        btnMAdd.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMAdd.setOpaque(false);
+        btnMAdd.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnMAddActionPerformed(evt);
+            }
+        });
 
-        jButton27.setBackground(new java.awt.Color(31, 32, 35));
-        jButton27.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton27.setForeground(new java.awt.Color(42, 222, 159));
-        jButton27.setText("M-");
-        jButton27.setBorderPainted(false);
-        jButton27.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton27.setOpaque(false);
+        btnMSub.setBackground(new java.awt.Color(31, 32, 35));
+        btnMSub.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnMSub.setForeground(new java.awt.Color(42, 222, 159));
+        btnMSub.setText("M-");
+        btnMSub.setBorderPainted(false);
+        btnMSub.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMSub.setOpaque(false);
+        btnMSub.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnMSubActionPerformed(evt);
+            }
+        });
 
-        jButton22.setBackground(new java.awt.Color(31, 32, 35));
-        jButton22.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton22.setForeground(new java.awt.Color(173, 172, 180));
-        jButton22.setText("√");
-        jButton22.setBorderPainted(false);
-        jButton22.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton22.setOpaque(false);
+        btnSqrt.setBackground(new java.awt.Color(31, 32, 35));
+        btnSqrt.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnSqrt.setForeground(new java.awt.Color(173, 172, 180));
+        btnSqrt.setText("√");
+        btnSqrt.setBorderPainted(false);
+        btnSqrt.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnSqrt.setOpaque(false);
+        btnSqrt.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnSqrtActionPerformed(evt);
+            }
+        });
 
-        jButton20.setBackground(new java.awt.Color(31, 32, 35));
-        jButton20.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton20.setForeground(new java.awt.Color(173, 172, 180));
-        jButton20.setText("±");
-        jButton20.setBorderPainted(false);
-        jButton20.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton20.setOpaque(false);
+        btnChangeSign.setBackground(new java.awt.Color(31, 32, 35));
+        btnChangeSign.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnChangeSign.setForeground(new java.awt.Color(173, 172, 180));
+        btnChangeSign.setText("±");
+        btnChangeSign.setBorderPainted(false);
+        btnChangeSign.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnChangeSign.setOpaque(false);
+        btnChangeSign.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnChangeSignActionPerformed(evt);
+            }
+        });
 
-        jButton19.setBackground(new java.awt.Color(31, 32, 35));
-        jButton19.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton19.setForeground(new java.awt.Color(173, 172, 180));
-        jButton19.setText("C");
-        jButton19.setBorderPainted(false);
-        jButton19.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton19.setOpaque(false);
+        btnClear.setBackground(new java.awt.Color(31, 32, 35));
+        btnClear.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnClear.setForeground(new java.awt.Color(173, 172, 180));
+        btnClear.setText("C");
+        btnClear.setBorderPainted(false);
+        btnClear.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnClear.setOpaque(false);
+        btnClear.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnClearActionPerformed(evt);
+            }
+        });
 
-        jButton21.setBackground(new java.awt.Color(31, 32, 35));
-        jButton21.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton21.setForeground(new java.awt.Color(173, 172, 180));
-        jButton21.setText("CE");
-        jButton21.setBorderPainted(false);
-        jButton21.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton21.setOpaque(false);
+        btnBackspace.setBackground(new java.awt.Color(31, 32, 35));
+        btnBackspace.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnBackspace.setForeground(new java.awt.Color(173, 172, 180));
+        btnBackspace.setText("←");
+        btnBackspace.setBorderPainted(false);
+        btnBackspace.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnBackspace.setOpaque(false);
+        btnBackspace.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnBackspaceActionPerformed(evt);
+            }
+        });
 
-        jButton23.setBackground(new java.awt.Color(31, 32, 35));
-        jButton23.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton23.setForeground(new java.awt.Color(173, 172, 180));
-        jButton23.setText("←");
-        jButton23.setBorderPainted(false);
-        jButton23.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton23.setOpaque(false);
+        btn7.setBackground(new java.awt.Color(31, 32, 35));
+        btn7.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btn7.setForeground(new java.awt.Color(255, 255, 255));
+        btn7.setText("7");
+        btn7.setBorderPainted(false);
+        btn7.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btn7.setOpaque(false);
+        btn7.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btn7ActionPerformed(evt);
+            }
+        });
 
-        jButton14.setBackground(new java.awt.Color(31, 32, 35));
-        jButton14.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton14.setForeground(new java.awt.Color(255, 255, 255));
-        jButton14.setText("7");
-        jButton14.setBorderPainted(false);
-        jButton14.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton14.setOpaque(false);
+        btn8.setBackground(new java.awt.Color(31, 32, 35));
+        btn8.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btn8.setForeground(new java.awt.Color(255, 255, 255));
+        btn8.setText("8");
+        btn8.setBorderPainted(false);
+        btn8.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btn8.setOpaque(false);
+        btn8.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btn8ActionPerformed(evt);
+            }
+        });
 
-        jButton15.setBackground(new java.awt.Color(31, 32, 35));
-        jButton15.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton15.setForeground(new java.awt.Color(255, 255, 255));
-        jButton15.setText("8");
-        jButton15.setBorderPainted(false);
-        jButton15.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton15.setOpaque(false);
+        btn9.setBackground(new java.awt.Color(31, 32, 35));
+        btn9.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btn9.setForeground(new java.awt.Color(255, 255, 255));
+        btn9.setText("9");
+        btn9.setBorderPainted(false);
+        btn9.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btn9.setOpaque(false);
+        btn9.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btn9ActionPerformed(evt);
+            }
+        });
 
-        jButton16.setBackground(new java.awt.Color(31, 32, 35));
-        jButton16.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton16.setForeground(new java.awt.Color(255, 255, 255));
-        jButton16.setText("9");
-        jButton16.setBorderPainted(false);
-        jButton16.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton16.setOpaque(false);
+        btnDiv.setBackground(new java.awt.Color(31, 32, 35));
+        btnDiv.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnDiv.setForeground(new java.awt.Color(173, 172, 180));
+        btnDiv.setText("/");
+        btnDiv.setBorderPainted(false);
+        btnDiv.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnDiv.setOpaque(false);
+        btnDiv.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnDivActionPerformed(evt);
+            }
+        });
 
-        jButton17.setBackground(new java.awt.Color(31, 32, 35));
-        jButton17.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton17.setForeground(new java.awt.Color(173, 172, 180));
-        jButton17.setText("/");
-        jButton17.setBorderPainted(false);
-        jButton17.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton17.setOpaque(false);
+        btnPercent.setBackground(new java.awt.Color(31, 32, 35));
+        btnPercent.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnPercent.setForeground(new java.awt.Color(173, 172, 180));
+        btnPercent.setText("%");
+        btnPercent.setBorderPainted(false);
+        btnPercent.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnPercent.setOpaque(false);
+        btnPercent.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnPercentActionPerformed(evt);
+            }
+        });
 
-        jButton18.setBackground(new java.awt.Color(31, 32, 35));
-        jButton18.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton18.setForeground(new java.awt.Color(173, 172, 180));
-        jButton18.setText("%");
-        jButton18.setBorderPainted(false);
-        jButton18.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton18.setOpaque(false);
+        btnInverse.setBackground(new java.awt.Color(31, 32, 35));
+        btnInverse.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnInverse.setForeground(new java.awt.Color(173, 172, 180));
+        btnInverse.setText("1/x");
+        btnInverse.setBorderPainted(false);
+        btnInverse.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnInverse.setOpaque(false);
+        btnInverse.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnInverseActionPerformed(evt);
+            }
+        });
 
-        jButton13.setBackground(new java.awt.Color(31, 32, 35));
-        jButton13.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton13.setForeground(new java.awt.Color(173, 172, 180));
-        jButton13.setText("1/x");
-        jButton13.setBorderPainted(false);
-        jButton13.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton13.setOpaque(false);
+        btnMul.setBackground(new java.awt.Color(31, 32, 35));
+        btnMul.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnMul.setForeground(new java.awt.Color(173, 172, 180));
+        btnMul.setText("*");
+        btnMul.setBorderPainted(false);
+        btnMul.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMul.setOpaque(false);
+        btnMul.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnMulActionPerformed(evt);
+            }
+        });
 
-        jButton12.setBackground(new java.awt.Color(31, 32, 35));
-        jButton12.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(173, 172, 180));
-        jButton12.setText("*");
-        jButton12.setBorderPainted(false);
-        jButton12.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton12.setOpaque(false);
+        btn6.setBackground(new java.awt.Color(31, 32, 35));
+        btn6.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btn6.setForeground(new java.awt.Color(255, 255, 255));
+        btn6.setText("6");
+        btn6.setBorderPainted(false);
+        btn6.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btn6.setOpaque(false);
+        btn6.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btn6ActionPerformed(evt);
+            }
+        });
 
-        jButton11.setBackground(new java.awt.Color(31, 32, 35));
-        jButton11.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("6");
-        jButton11.setBorderPainted(false);
-        jButton11.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton11.setOpaque(false);
+        btn5.setBackground(new java.awt.Color(31, 32, 35));
+        btn5.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btn5.setForeground(new java.awt.Color(255, 255, 255));
+        btn5.setText("5");
+        btn5.setBorderPainted(false);
+        btn5.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btn5.setOpaque(false);
+        btn5.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btn5ActionPerformed(evt);
+            }
+        });
 
-        jButton10.setBackground(new java.awt.Color(31, 32, 35));
-        jButton10.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("5");
-        jButton10.setBorderPainted(false);
-        jButton10.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton10.setOpaque(false);
+        btn4.setBackground(new java.awt.Color(31, 32, 35));
+        btn4.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btn4.setForeground(new java.awt.Color(255, 255, 255));
+        btn4.setText("4");
+        btn4.setBorderPainted(false);
+        btn4.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btn4.setOpaque(false);
+        btn4.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btn4ActionPerformed(evt);
+            }
+        });
 
-        jButton9.setBackground(new java.awt.Color(31, 32, 35));
-        jButton9.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("4");
-        jButton9.setBorderPainted(false);
-        jButton9.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton9.setOpaque(false);
+        btn1.setBackground(new java.awt.Color(31, 32, 35));
+        btn1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btn1.setForeground(new java.awt.Color(255, 255, 255));
+        btn1.setText("1");
+        btn1.setBorderPainted(false);
+        btn1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btn1.setOpaque(false);
+        btn1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btn1ActionPerformed(evt);
+            }
+        });
 
-        jButton2.setBackground(new java.awt.Color(31, 32, 35));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("1");
-        jButton2.setBorderPainted(false);
-        jButton2.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton2.setOpaque(false);
+        btn2.setBackground(new java.awt.Color(31, 32, 35));
+        btn2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btn2.setForeground(new java.awt.Color(255, 255, 255));
+        btn2.setText("2");
+        btn2.setBorderPainted(false);
+        btn2.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btn2.setOpaque(false);
+        btn2.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btn2ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setBackground(new java.awt.Color(31, 32, 35));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("2");
-        jButton3.setBorderPainted(false);
-        jButton3.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton3.setOpaque(false);
+        btn3.setBackground(new java.awt.Color(31, 32, 35));
+        btn3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btn3.setForeground(new java.awt.Color(255, 255, 255));
+        btn3.setText("3");
+        btn3.setBorderPainted(false);
+        btn3.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btn3.setOpaque(false);
+        btn3.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btn3ActionPerformed(evt);
+            }
+        });
 
-        jButton5.setBackground(new java.awt.Color(31, 32, 35));
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("3");
-        jButton5.setBorderPainted(false);
-        jButton5.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton5.setOpaque(false);
+        btnSub.setBackground(new java.awt.Color(31, 32, 35));
+        btnSub.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnSub.setForeground(new java.awt.Color(173, 172, 180));
+        btnSub.setText("-");
+        btnSub.setBorderPainted(false);
+        btnSub.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnSub.setOpaque(false);
+        btnSub.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnSubActionPerformed(evt);
+            }
+        });
 
-        jButton7.setBackground(new java.awt.Color(31, 32, 35));
-        jButton7.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(173, 172, 180));
-        jButton7.setText("-");
-        jButton7.setBorderPainted(false);
-        jButton7.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton7.setOpaque(false);
+        btnResult.setBackground(new java.awt.Color(31, 32, 35));
+        btnResult.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnResult.setForeground(new java.awt.Color(42, 222, 159));
+        btnResult.setText("=");
+        btnResult.setBorderPainted(false);
+        btnResult.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnResult.setOpaque(false);
+        btnResult.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnResultActionPerformed(evt);
+            }
+        });
 
-        jButton8.setBackground(new java.awt.Color(31, 32, 35));
-        jButton8.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(42, 222, 159));
-        jButton8.setText("=");
-        jButton8.setBorderPainted(false);
-        jButton8.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton8.setOpaque(false);
+        btnAdd.setBackground(new java.awt.Color(31, 32, 35));
+        btnAdd.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnAdd.setForeground(new java.awt.Color(173, 172, 180));
+        btnAdd.setText("+");
+        btnAdd.setBorderPainted(false);
+        btnAdd.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnAdd.setOpaque(false);
+        btnAdd.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnAddActionPerformed(evt);
+            }
+        });
 
-        jButton6.setBackground(new java.awt.Color(31, 32, 35));
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(173, 172, 180));
-        jButton6.setText("+");
-        jButton6.setBorderPainted(false);
-        jButton6.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton6.setOpaque(false);
+        btnDecPoint.setBackground(new java.awt.Color(31, 32, 35));
+        btnDecPoint.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btnDecPoint.setForeground(new java.awt.Color(255, 255, 255));
+        btnDecPoint.setText(".");
+        btnDecPoint.setBorderPainted(false);
+        btnDecPoint.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnDecPoint.setOpaque(false);
+        btnDecPoint.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnDecPointActionPerformed(evt);
+            }
+        });
 
-        jButton4.setBackground(new java.awt.Color(31, 32, 35));
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText(".");
-        jButton4.setBorderPainted(false);
-        jButton4.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton4.setOpaque(false);
+        btn0.setBackground(new java.awt.Color(31, 32, 35));
+        btn0.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        btn0.setForeground(new java.awt.Color(255, 255, 255));
+        btn0.setText("0");
+        btn0.setBorderPainted(false);
+        btn0.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btn0.setOpaque(false);
+        btn0.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btn0ActionPerformed(evt);
+            }
+        });
 
-        jButton1.setBackground(new java.awt.Color(31, 32, 35));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("0");
-        jButton1.setBorderPainted(false);
-        jButton1.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton1.setOpaque(false);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout paneBackgroundLayout = new javax.swing.GroupLayout(paneBackground);
+        paneBackground.setLayout(paneBackgroundLayout);
+        paneBackgroundLayout.setHorizontalGroup(
+            paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paneBackgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(paneBackgroundLayout.createSequentialGroup()
+                            .addGroup(paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btn0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(paneBackgroundLayout.createSequentialGroup()
+                                    .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(paneBackgroundLayout.createSequentialGroup()
+                                    .addComponent(btnDecPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(paneBackgroundLayout.createSequentialGroup()
+                                    .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(btnSub, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnResult, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(paneBackgroundLayout.createSequentialGroup()
+                            .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMul, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnInverse, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtDisplay, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneBackgroundLayout.createSequentialGroup()
+                            .addComponent(btn7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnDiv, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneBackgroundLayout.createSequentialGroup()
+                            .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnBackspace, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnChangeSign, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnSqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneBackgroundLayout.createSequentialGroup()
+                        .addComponent(btnMClear, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnMRecall, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnMStore, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnMAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnMSub, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        paneBackgroundLayout.setVerticalGroup(
+            paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paneBackgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                .addComponent(txtDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnMClear, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMRecall, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMStore, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMSub, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBackspace, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnChangeSign, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDiv, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMul, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInverse, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnResult, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(paneBackgroundLayout.createSequentialGroup()
+                        .addGroup(paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSub, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(paneBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn0, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDecPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -423,15 +708,268 @@ public class FrameCalculator extends javax.swing.JFrame
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(paneBackground, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(paneBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    // ===================== VARIABLE =====================
+    
+    // ZERO
+    private void btn0ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btn0ActionPerformed
+    {//GEN-HEADEREND:event_btn0ActionPerformed
+        pressBtnNum(btn0);
+    }//GEN-LAST:event_btn0ActionPerformed
+
+    // ONE
+    private void btn1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btn1ActionPerformed
+    {//GEN-HEADEREND:event_btn1ActionPerformed
+        pressBtnNum(btn1);
+    }//GEN-LAST:event_btn1ActionPerformed
+
+    // TWO
+    private void btn2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btn2ActionPerformed
+    {//GEN-HEADEREND:event_btn2ActionPerformed
+        pressBtnNum(btn2);
+    }//GEN-LAST:event_btn2ActionPerformed
+
+    // THREE
+    private void btn3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btn3ActionPerformed
+    {//GEN-HEADEREND:event_btn3ActionPerformed
+        pressBtnNum(btn3);
+    }//GEN-LAST:event_btn3ActionPerformed
+
+    // FOUR
+    private void btn4ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btn4ActionPerformed
+    {//GEN-HEADEREND:event_btn4ActionPerformed
+        pressBtnNum(btn4);
+    }//GEN-LAST:event_btn4ActionPerformed
+
+    // FIVE
+    private void btn5ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btn5ActionPerformed
+    {//GEN-HEADEREND:event_btn5ActionPerformed
+        pressBtnNum(btn5);
+    }//GEN-LAST:event_btn5ActionPerformed
+
+    // SIX
+    private void btn6ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btn6ActionPerformed
+    {//GEN-HEADEREND:event_btn6ActionPerformed
+        pressBtnNum(btn6);
+    }//GEN-LAST:event_btn6ActionPerformed
+
+    // SEVEN
+    private void btn7ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btn7ActionPerformed
+    {//GEN-HEADEREND:event_btn7ActionPerformed
+        pressBtnNum(btn7);
+    }//GEN-LAST:event_btn7ActionPerformed
+
+    // EIGHT
+    private void btn8ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btn8ActionPerformed
+    {//GEN-HEADEREND:event_btn8ActionPerformed
+        pressBtnNum(btn8);
+    }//GEN-LAST:event_btn8ActionPerformed
+
+    // NINE
+    private void btn9ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btn9ActionPerformed
+    {//GEN-HEADEREND:event_btn9ActionPerformed
+        pressBtnNum(btn9);
+    }//GEN-LAST:event_btn9ActionPerformed
+
+    // DECIMAL POINT
+    private void btnDecPointActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnDecPointActionPerformed
+    {//GEN-HEADEREND:event_btnDecPointActionPerformed
+        if(!txtDisplay.getText().contains(".") && append && !error)
+            txtDisplay.setText(txtDisplay.getText() + ".");
+    }//GEN-LAST:event_btnDecPointActionPerformed
+
+    // ===================== OPERATIONS =====================
+    
+    // ADDITION
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddActionPerformed
+    {//GEN-HEADEREND:event_btnAddActionPerformed
+        pressBtnOperator(btnAdd);
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    // SUBTRACTION
+    private void btnSubActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSubActionPerformed
+    {//GEN-HEADEREND:event_btnSubActionPerformed
+        pressBtnOperator(btnSub);
+    }//GEN-LAST:event_btnSubActionPerformed
+
+    // MULTIPLICATION
+    private void btnMulActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMulActionPerformed
+    {//GEN-HEADEREND:event_btnMulActionPerformed
+        pressBtnOperator(btnMul);
+    }//GEN-LAST:event_btnMulActionPerformed
+
+    // DIVISION
+    private void btnDivActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnDivActionPerformed
+    {//GEN-HEADEREND:event_btnDivActionPerformed
+        pressBtnOperator(btnDiv);
+    }//GEN-LAST:event_btnDivActionPerformed
+
+    // INVERSE
+    private void btnInverseActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnInverseActionPerformed
+    {//GEN-HEADEREND:event_btnInverseActionPerformed
+        if (!error)
+            if (Double.parseDouble(txtDisplay.getText()) == 0)
+            {
+                txtDisplay.setText("ERROR");
+                error = true;
+            } else
+            {
+                txtDisplay.setText(convertDecimalFormat(1 / (Double.parseDouble(txtDisplay.getText()))));
+                append = false;
+            }
+    }//GEN-LAST:event_btnInverseActionPerformed
+
+    // PERCENT
+    private void btnPercentActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnPercentActionPerformed
+    {//GEN-HEADEREND:event_btnPercentActionPerformed
+        if (!error)
+        {
+            txtDisplay.setText(convertDecimalFormat(Double.parseDouble(txtDisplay.getText()) / 100));
+            append = false;
+        }
+    }//GEN-LAST:event_btnPercentActionPerformed
+
+    // SQUARE
+    private void btnSqrtActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSqrtActionPerformed
+    {//GEN-HEADEREND:event_btnSqrtActionPerformed
+        if (!error)
+        {
+            if (Double.parseDouble(txtDisplay.getText()) < 0)
+            {
+                txtDisplay.setText("ERROR");
+                error = true;
+            } else
+                txtDisplay.setText(convertDecimalFormat(Math.sqrt(Double.parseDouble(txtDisplay.getText()))));
+            append = false;
+        }
+    }//GEN-LAST:event_btnSqrtActionPerformed
+
+    // CHANGE SIGN
+    private void btnChangeSignActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnChangeSignActionPerformed
+    {//GEN-HEADEREND:event_btnChangeSignActionPerformed
+        if (!error)
+        {
+            String result = txtDisplay.getText();
+            if (append && !result.equals("0"))
+                if (result.charAt(0) != '-')
+                    result = "-" + result;
+                else
+                    result = result.substring(1, result.length());
+            if (!append)
+            {
+                result = convertDecimalFormat(Double.parseDouble(result) * (-1));
+                num = Double.parseDouble(result) * (-1);
+            }
+            txtDisplay.setText(result);
+        }
+    }//GEN-LAST:event_btnChangeSignActionPerformed
+
+    // BACKSPACE
+    private void btnBackspaceActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnBackspaceActionPerformed
+    {//GEN-HEADEREND:event_btnBackspaceActionPerformed
+        if (append && !error)
+        {
+            String result = txtDisplay.getText();
+            int length = result.length();
+            if (length > 3)
+                if ((result.charAt(length - 1) + "").equals("."))
+                    result = result.substring(0, length - 2);
+                else
+                    result = result.substring(0, length - 1);
+            else if (length == 3)
+                if (result.charAt(0) == '-' && result.charAt(2) == '.')
+                    result = "0";
+                else if ((result.charAt(length - 1) + "").equals("."))
+                    result = result.substring(0, length - 2);
+                else
+                    result = result.substring(0, 2);
+            else if (length == 2)
+                if (result.charAt(0) == '-' || result.charAt(1) == '.')
+                    result = "0";
+                else
+                    result = result.substring(0, 1);
+            else
+                result = "0";
+            txtDisplay.setText(result);
+        }
+    }//GEN-LAST:event_btnBackspaceActionPerformed
+
+    // CLEAR
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnClearActionPerformed
+    {//GEN-HEADEREND:event_btnClearActionPerformed
+        num = 0;
+        operator = "";
+        append = false;
+        error = false;
+        txtDisplay.setText("0");
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    // ===================== CALCULATIONS =====================
+    
+    // RESULT
+    private void btnResultActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnResultActionPerformed
+    {//GEN-HEADEREND:event_btnResultActionPerformed
+        pressBtnResult();
+    }//GEN-LAST:event_btnResultActionPerformed
+
+    // MEMORY CLEAR
+    private void btnMClearActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMClearActionPerformed
+    {//GEN-HEADEREND:event_btnMClearActionPerformed
+        if(!error)
+        {
+            memory = 0;
+            append = false;
+        }
+    }//GEN-LAST:event_btnMClearActionPerformed
+
+    // MEMORY RECALL
+    private void btnMRecallActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMRecallActionPerformed
+    {//GEN-HEADEREND:event_btnMRecallActionPerformed
+        if(!error)
+        {
+            txtDisplay.setText(convertDecimalFormat(memory));
+            append = false;
+        }
+    }//GEN-LAST:event_btnMRecallActionPerformed
+
+    // MEMORY STORE
+    private void btnMStoreActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMStoreActionPerformed
+    {//GEN-HEADEREND:event_btnMStoreActionPerformed
+        if(!error)
+        {
+            memory = Double.parseDouble(txtDisplay.getText());
+            append = false;
+        }
+    }//GEN-LAST:event_btnMStoreActionPerformed
+
+    // MEMORY ADDITION
+    private void btnMAddActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMAddActionPerformed
+    {//GEN-HEADEREND:event_btnMAddActionPerformed
+        if (!error)
+        {
+            memory += Double.parseDouble(txtDisplay.getText());
+            append = false;
+        }
+    }//GEN-LAST:event_btnMAddActionPerformed
+
+    // MEMORY SUBTRACTION
+    private void btnMSubActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMSubActionPerformed
+    {//GEN-HEADEREND:event_btnMSubActionPerformed
+        if (!error)
+        {
+            memory -= Double.parseDouble(txtDisplay.getText());
+            append = false;
+        }
+    }//GEN-LAST:event_btnMSubActionPerformed
 
     /**
      * @param args the command line arguments
@@ -477,35 +1015,34 @@ public class FrameCalculator extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton22;
-    private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
-    private javax.swing.JButton jButton26;
-    private javax.swing.JButton jButton27;
-    private javax.swing.JButton jButton28;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton btn0;
+    private javax.swing.JButton btn1;
+    private javax.swing.JButton btn2;
+    private javax.swing.JButton btn3;
+    private javax.swing.JButton btn4;
+    private javax.swing.JButton btn5;
+    private javax.swing.JButton btn6;
+    private javax.swing.JButton btn7;
+    private javax.swing.JButton btn8;
+    private javax.swing.JButton btn9;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnBackspace;
+    private javax.swing.JButton btnChangeSign;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnDecPoint;
+    private javax.swing.JButton btnDiv;
+    private javax.swing.JButton btnInverse;
+    private javax.swing.JButton btnMAdd;
+    private javax.swing.JButton btnMClear;
+    private javax.swing.JButton btnMRecall;
+    private javax.swing.JButton btnMStore;
+    private javax.swing.JButton btnMSub;
+    private javax.swing.JButton btnMul;
+    private javax.swing.JButton btnPercent;
+    private javax.swing.JButton btnResult;
+    private javax.swing.JButton btnSqrt;
+    private javax.swing.JButton btnSub;
+    private javax.swing.JPanel paneBackground;
+    private javax.swing.JTextField txtDisplay;
     // End of variables declaration//GEN-END:variables
 }
